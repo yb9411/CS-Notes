@@ -239,23 +239,26 @@ class Solution(object):
 
 [Leetcode](https://leetcode.com/problems/linked-list-cycle/description/) / [力扣](https://leetcode-cn.com/problems/linked-list-cycle/description/)
 
-使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。
+使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。如果快指针指向了null或者，快指针.next指向了null，表示没有环。
 
-```java
-public boolean hasCycle(ListNode head) {
-    if (head == null) {
-        return false;
-    }
-    ListNode l1 = head, l2 = head.next;
-    while (l1 != null && l2 != null && l2.next != null) {
-        if (l1 == l2) {
-            return true;
-        }
-        l1 = l1.next;
-        l2 = l2.next.next;
-    }
-    return false;
-}
+```python
+class Solution(object):
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head or not head.next:
+            return False
+
+        slow = head
+        fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if fast == slow:
+                return True
+        return False
 ```
 
 ## 7. 最长子序列
