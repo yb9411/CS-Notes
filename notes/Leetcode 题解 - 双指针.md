@@ -203,24 +203,34 @@ Output: [1,2,2,3,5,6]
 
 题目描述：把归并结果存到第一个数组上。
 
-需要从尾开始遍历，否则在 nums1 上归并得到的值会覆盖还未进行归并比较的值。
+需要从尾开始遍历，否则在 nums1 上归并得到的值会覆盖还未进行归并比较的值。while只判断nums2的index，因为nums2全部移动后，nums1也已经操作好。
 
-```java
-public void merge(int[] nums1, int m, int[] nums2, int n) {
-    int index1 = m - 1, index2 = n - 1;
-    int indexMerge = m + n - 1;
-    while (index2 >= 0) {
-        if (index1 < 0) {
-            nums1[indexMerge--] = nums2[index2--];
-        } else if (index2 < 0) {
-            nums1[indexMerge--] = nums1[index1--];
-        } else if (nums1[index1] > nums2[index2]) {
-            nums1[indexMerge--] = nums1[index1--];
-        } else {
-            nums1[indexMerge--] = nums2[index2--];
-        }
-    }
-}
+```python
+class Solution(object):
+    def merge(self, nums1, m, nums2, n):
+        """
+        :type nums1: List[int]
+        :type m: int
+        :type nums2: List[int]
+        :type n: int
+        :rtype: None Do not return anything, modify nums1 in-place instead.
+        """
+        midx = m-1
+        nidx = n-1
+        merge_idx = m+n-1
+        while nidx>=0:
+            if midx<0:
+                nums1[merge_idx] = nums2[nidx]
+                merge_idx-=1
+                nidx-=1
+            elif nums1[midx]<=nums2[nidx]:
+                nums1[merge_idx]=nums2[nidx]
+                merge_idx-=1
+                nidx-=1
+            else:
+                nums1[merge_idx] = nums1[midx]
+                merge_idx-=1
+                midx-=1
 ```
 
 ## 6. 判断链表是否存在环
