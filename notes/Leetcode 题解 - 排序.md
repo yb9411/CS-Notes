@@ -52,56 +52,28 @@ public int findKthLargest(int[] nums, int k) {
 
 **堆**  ：时间复杂度 O(NlogK)，空间复杂度 O(K)。
 
-```java
-public int findKthLargest(int[] nums, int k) {
-    PriorityQueue<Integer> pq = new PriorityQueue<>(); // 小顶堆
-    for (int val : nums) {
-        pq.add(val);
-        if (pq.size() > k)  // 维护堆的大小为 K
-            pq.poll();
-    }
-    return pq.peek();
-}
-```
+```python
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        num1=[]
+        num2=[]
+        pivot =random.choice(nums)
+        for num in nums:
+            if num>pivot:
+                num1.append(num)
+            elif num<pivot:
+                num2.append(num)
 
-**快速选择**  ：时间复杂度 O(N)，空间复杂度 O(1)
-
-```java
-public int findKthLargest(int[] nums, int k) {
-    k = nums.length - k;
-    int l = 0, h = nums.length - 1;
-    while (l < h) {
-        int j = partition(nums, l, h);
-        if (j == k) {
-            break;
-        } else if (j < k) {
-            l = j + 1;
-        } else {
-            h = j - 1;
-        }
-    }
-    return nums[k];
-}
-
-private int partition(int[] a, int l, int h) {
-    int i = l, j = h + 1;
-    while (true) {
-        while (a[++i] < a[l] && i < h) ;
-        while (a[--j] > a[l] && j > l) ;
-        if (i >= j) {
-            break;
-        }
-        swap(a, i, j);
-    }
-    swap(a, l, j);
-    return j;
-}
-
-private void swap(int[] a, int i, int j) {
-    int t = a[i];
-    a[i] = a[j];
-    a[j] = t;
-}
+        if k<=len(num1):
+            return self.findKthLargest(num1,k)
+        if k>len(nums) - len(num2):
+            return self.findKthLargest(num2,k-(len(nums) - len(num2)))
+        return pivot
 ```
 
 ## 桶排序
